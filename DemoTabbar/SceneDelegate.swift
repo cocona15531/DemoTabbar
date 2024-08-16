@@ -11,13 +11,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let scene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: scene)
-        window.rootViewController = RootViewController()
-        window.makeKeyAndVisible()
-        self.window = window
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+
+        // UIWindowのインスタンスを作成
+        window = UIWindow(windowScene: windowScene)
+        
+        // Tab Bar Controllerのインスタンスを作成
+        let tabBarController = UITabBarController()
+        
+        // 各View Controllerのインスタンスを作成
+        let homeVC = RootViewController()
+        let settingsVC = SettingViewController()
+        
+        // Tab Bar Itemの設定
+        homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house.fill"), tag: 0)
+        settingsVC.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gearshape.fill"), tag: 1)
+        
+        // View ControllerをTab Bar Controllerに設定
+        tabBarController.viewControllers = [homeVC, settingsVC]
+        
+        // UIWindowのrootViewControllerとしてTab Bar Controllerを設定
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
